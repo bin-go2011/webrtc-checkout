@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.5)
 project(webrtc-checkout)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH}
@@ -9,12 +9,6 @@ find_package(PythonInterp 2.7 REQUIRED)
 
 include(ExternalProject)
 if (NOT HAS_OWN_DEPOT_TOOLS)
-  if (WIN32)
-    set(GCLIENT_EXECUTABLE ${CMAKE_BINARY_DIR}/depot_tools/src/depot-tools/gclient.bat)
-  else (WIN32)
-    set(GCLIENT_EXECUTABLE ${CMAKE_BINARY_DIR}/depot_tools/src/depot-tools/gclient)
-  endif (WIN32)
-
   ExternalProject_Add(
       depot-tools
 
@@ -32,10 +26,12 @@ if (NOT HAS_OWN_DEPOT_TOOLS)
   set(DEPOT_TOOLS_PATH ${CMAKE_BINARY_DIR}/depot_tools/src/depot-tools)
 endif (NOT HAS_OWN_DEPOT_TOOLS)
 
-message(STATUS ${GCLIENT_EXECUTABLE})
 add_custom_target(
+  webrtc-src
   ALL
   DEPENDS depot-tools
-  COMMAND ${GCLIENT_EXECUTABLE} sync
+  COMMAND ${CMAKE_COMMAND} -E env PATH=${DEPOT_TOOLS_PATH}:$ENV{PATH}
+  COMMAND fetch --nohooks webrtc
   WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
 )
+
