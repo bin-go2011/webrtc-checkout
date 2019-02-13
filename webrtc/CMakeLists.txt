@@ -25,3 +25,11 @@ libwebrtc_command(
     COMMENT "Synchronizing WebRTC"
     DEPENDS webrtc-fetch
 )
+
+libwebrtc_command(
+    NAME webrtc-generate
+    COMMAND ${_GEN_COMMAND} gen out/Default
+    WORKING_DIRECTORY "${WEBRTC_ROOT_PATH}"
+    COMMENT "Generating build files"
+    DEPENDS webrtc-sync
+)
