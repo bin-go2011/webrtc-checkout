@@ -1,14 +1,19 @@
 cmake_minimum_required(VERSION 3.5)
 project(webrtc)
 
-message(STATUS ${CMAKE_BINARY_DIR})
-#set(WEBRTC_ROOT_PATH "" CACHE STRING "Path to your own webrtc directory")
-
 include(LibWebRTCCommand)
+
+if (WIN32)
+    set(GCLIENT_EXECUTABLE gclient.bat)
+    set(FETCH_EXECUTABLE fetch.bat)
+else(WIN32)
+    set(GCLIENT_EXECUTABLE gclient)
+    set(FETCH_EXECUTABLE fetch)
+endif(WIN32)
 
 libwebrtc_command(
     NAME webrtc-fetch
-    COMMAND fetch --nohooks webrtc 
+    COMMAND ${FETCH_EXECUTABLE} --nohooks webrtc 
     WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
     COMMENT "Fetching WebRTC"
 )
@@ -16,7 +21,7 @@ libwebrtc_command(
 
 libwebrtc_command(
     NAME webrtc-sync
-    COMMAND gclient sync
+    COMMAND ${GCLIENT_EXECUTABLE} sync
     WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
     COMMENT "Synchronizing WebRTC"
     DEPENDS webrtc-fetch
