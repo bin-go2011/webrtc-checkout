@@ -56,6 +56,7 @@ if ("${WEBRTC_ROOT_PATH}" STREQUAL "" )
       INSTALL_COMMAND
       ""
   )
+  set(_NEXT_DEPENDS webrtc-src)
   set(WEBRTC_ROOT_PATH ${CMAKE_BINARY_DIR}/webrtc/build)
 else()
   message(STATUS ${WEBRTC_ROOT_PATH})
@@ -64,7 +65,7 @@ endif()
 ExternalProject_Add(
   libwebrtc
 
-  DEPENDS webrtc-src
+  DEPENDS ${_NEXT_DEPENDS}
 
   INSTALL_DIR ${CMAKE_BINARY_DIR}
   SOURCE_DIR ${CMAKE_SOURCE_DIR}/libwebrtc
