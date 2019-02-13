@@ -26,5 +26,12 @@ libwebrtc_command(
     DEPENDS webrtc-fetch
 )
 
-include(Version)
+include(Gn)
 
+libwebrtc_command(
+    NAME webrtc-generate
+    COMMAND ${_GEN_COMMAND}
+    WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
+    COMMENT "Generating build files"
+    DEPENDS webrtc-sync
+)
