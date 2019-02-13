@@ -57,7 +57,7 @@ if ("${WEBRTC_ROOT_PATH}" STREQUAL "" )
       ""
   )
   set(_NEXT_DEPENDS webrtc-src)
-  set(WEBRTC_ROOT_PATH ${CMAKE_BINARY_DIR}/webrtc/build)
+  set(WEBRTC_ROOT_PATH ${CMAKE_BINARY_DIR}/webrtc/build/src)
 else()
   message(STATUS ${WEBRTC_ROOT_PATH})
 endif()

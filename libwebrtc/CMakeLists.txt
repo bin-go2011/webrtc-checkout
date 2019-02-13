@@ -6,8 +6,8 @@ include(Gn)
 
 libwebrtc_command(
     NAME webrtc-generate
-    COMMAND ${_GEN_COMMAND}
-    WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
+    COMMAND ${_GEN_COMMAND} gen out/Default
+    WORKING_DIRECTORY "${WEBRTC_ROOT_PATH}"
     COMMENT "Generating build files"
     DEPENDS webrtc-sync
 )
