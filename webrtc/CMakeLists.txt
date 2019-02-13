@@ -17,7 +17,6 @@ libwebrtc_command(
     WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
     COMMENT "Fetching WebRTC"
 )
-#    set(WEBRTC_ROOT_PATH ${CMAKE_BINARY_DIR})
 
 libwebrtc_command(
     NAME webrtc-sync
@@ -26,3 +25,6 @@ libwebrtc_command(
     COMMENT "Synchronizing WebRTC"
     DEPENDS webrtc-fetch
 )
+
+include(Version)
+

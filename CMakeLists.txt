@@ -33,24 +33,30 @@ if (NOT HAS_OWN_DEPOT_TOOLS)
   set(DEPOT_TOOLS_PATH ${CMAKE_BINARY_DIR}/depot_tools/src/depot-tools)
 endif (NOT HAS_OWN_DEPOT_TOOLS)
 
-set(_WEBRTC_CMAKE_ARGS
-    -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
-    -DCMAKE_MODULE_PATH:PATH=${CMAKE_MODULE_PATH}
-    -DDEPOT_TOOLS_PATH:PATH=${DEPOT_TOOLS_PATH}
-)
+if ("${WEBRTC_ROOT_PATH}" STREQUAL "" )
 
-ExternalProject_Add(
-    webrtc-src
+  set(_WEBRTC_CMAKE_ARGS
+      -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
+      -DCMAKE_MODULE_PATH:PATH=${CMAKE_MODULE_PATH}
+      -DDEPOT_TOOLS_PATH:PATH=${DEPOT_TOOLS_PATH}
+  )
 
-    DEPENDS ${_NEXT_DEPENDS}
-    SOURCE_DIR ${CMAKE_SOURCE_DIR}/webrtc
-    PREFIX ${CMAKE_BINARY_DIR}/webrtc
-    BINARY_DIR ${CMAKE_BINARY_DIR}/webrtc/build
-    STAMP_DIR ${CMAKE_BINARY_DIR}/webrtc/stamp
-    TMP_DIR ${CMAKE_BINARY_DIR}/webrtc/tmp
-    
-    CMAKE_ARGS
-    ${_WEBRTC_CMAKE_ARGS}
-    INSTALL_COMMAND
-    ""
-)
+  ExternalProject_Add(
+      webrtc-src
+
+      DEPENDS ${_NEXT_DEPENDS}
+      SOURCE_DIR ${CMAKE_SOURCE_DIR}/webrtc
+      PREFIX ${CMAKE_BINARY_DIR}/webrtc
+      BINARY_DIR ${CMAKE_BINARY_DIR}/webrtc/build
+      STAMP_DIR ${CMAKE_BINARY_DIR}/webrtc/stamp
+      TMP_DIR ${CMAKE_BINARY_DIR}/webrtc/tmp
+      
+      CMAKE_ARGS
+      ${_WEBRTC_CMAKE_ARGS}
+      INSTALL_COMMAND
+      ""
+  )
+  set(WEBRTC_ROOT_PATH ${CMAKE_BINARY_DIR}/webrtc/build)
+else()
+  message(STATUS ${WEBRTC_ROOT_PATH})
+endif()
