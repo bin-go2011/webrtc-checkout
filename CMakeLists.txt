@@ -64,9 +64,16 @@ function(libwebrtc_command)
   endif (COMMAND_DEPENDS)
 endfunction()
 
+#libwebrtc_command(
+#    NAME webrtc-fetch
+#    COMMAND fetch --nohooks webrtc 
+#    WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
+#    COMMENT "Fetching WebRTC"
+#)
+
 libwebrtc_command(
     NAME webrtc-sync
-    COMMAND fetch --nohooks webrtc 
+    COMMAND gclient sync
     WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
     COMMENT "Synchronizing WebRTC"
 )
